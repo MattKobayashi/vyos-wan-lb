@@ -22,7 +22,7 @@ do
     if [[ $interface == "pppoe"* ]]; then
         gw=$(run show ip route | egrep $interface | egrep '\/32' | awk -F "[/, ]+" -v interface=$interface '$0 ~ interface {print $2}')
     else
-        gw=$(run show ip route | egrep $interface | awk -F "[, ]+" -v interface=$interface '$0 ~ interface {print $5}' | sed --regexp-extended '/^(connected|directly)$/d')
+        gw=$(run show dhcp client leases interface $interface | egrep "Router" | egrep -o "([0-9]{1,3}\.{0,1}){4}")
     fi
     logger "Interface gateway IP: $gw"
 
@@ -74,7 +74,7 @@ do
     if [[ $interface == "pppoe"* ]]; then
         gw=$(run show ip route | egrep $interface | egrep '\/32' | awk -F "[/, ]+" -v interface=$interface '$0 ~ interface {print $2}')
     else
-        gw=$(run show ip route | egrep $interface | awk -F "[, ]+" -v interface=$interface '$0 ~ interface {print $5}' | sed --regexp-extended '/^(connected|directly)$/d')
+        gw=$(run show dhcp client leases interface $interface | egrep "Router" | egrep -o "([0-9]{1,3}\.{0,1}){4}")
     fi
     logger "Interface gateway IP: $gw"
 
