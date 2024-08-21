@@ -26,7 +26,7 @@ do
     fi
     logger "Interface gateway IP: $gw"
 
-    gw_mac=$(sudo /usr/bin/arping -I $interface -c 1 $gw | egrep -o "([0-9a-fA-F]{2}:{0,1}){6}")
+    gw_mac=$(/usr/bin/arping -I $interface -c 1 $gw | egrep -o "([0-9a-fA-F]{2}:{0,1}){6}")
     logger "Interface gateway MAC: $gw_mac"
 
     if [[ -z $gw ]]; then
@@ -36,7 +36,7 @@ do
             alive="1"
         fi
     else
-        alive=$(nping --tcp --dest-port 80 --dest-mac $gw_mac --interface $interface --count 1 1.1.1.1 | awk '/Rcvd/ {print $8}')
+        alive=$(/usr/bin/nping --tcp --dest-port 80 --dest-mac $gw_mac --interface $interface --count 1 1.1.1.1 | awk '/Rcvd/ {print $8}')
     fi
 
     if [[ $alive = "1" ]]; then
@@ -78,7 +78,7 @@ do
     fi
     logger "Interface gateway IP: $gw"
 
-    gw_mac=$(sudo /usr/bin/arping -I $interface -c 1 $gw | egrep -o "([0-9a-fA-F]{2}:{0,1}){6}")
+    gw_mac=$(/usr/bin/arping -I $interface -c 1 $gw | egrep -o "([0-9a-fA-F]{2}:{0,1}){6}")
     logger "Interface gateway MAC: $gw_mac"
 
     if [[ -z $gw ]]; then
@@ -88,7 +88,7 @@ do
             alive="1"
         fi
     else
-        alive=$(nping --tcp --dest-port 80 --dest-mac $gw_mac --interface $interface --count 1 1.1.1.1 | awk '/Rcvd/ {print $8}')
+        alive=$(/usr/bin/nping --tcp --dest-port 80 --dest-mac $gw_mac --interface $interface --count 1 1.1.1.1 | awk '/Rcvd/ {print $8}')
     fi
 
     if [[ $alive = "1" ]]; then
